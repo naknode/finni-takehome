@@ -2,7 +2,9 @@
 
 New and improved patient portal using workspaces!
 
-**pnpm** is a fast, improved package manager. pnpm creates hard links from the global store to the project's node_modules folders. Hard links point to the same place on the disk where the original files are. You save disk spaces and it's faster!
+Before we start, this project uses pnpm instead of npm.
+
+**pnpm** is a fast, improved package manager. pnpm creates hard links from the global store to the project's node_modules folders. Hard links point to the same place on the disk where the original files are. You save disk space and it's faster than npm!
 
 - `/server`
   - esno (alias of `tsx`) to build and develop the TypeScript server
