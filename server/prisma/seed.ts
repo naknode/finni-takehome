@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 const prisma = new PrismaClient();
 
 async function main() {
-  const numberOfPatients = 10; // Adjust as needed
+  const numberOfPatients = 10;
 
   for (let i = 0; i < numberOfPatients; i++) {
     const patientUuid = faker.string.uuid();

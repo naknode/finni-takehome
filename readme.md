@@ -16,5 +16,22 @@ New and improved patient portal using workspaces!
 
 ### Scripts
 
-- `pnpm run start`: Start the client and server concurrently
-- `pnpm run build`: Build both the client and server during the CI/CD phase
+We utilize pnpm workspaces to better unify the CI/CD procedures for the front and backend.
+
+- `pnpm run build`: To run the builds of the TypeScript API server and Vue 3 front-end
+- `pnpm run dev`: To concurrently run the backend and front-end
+- `pnpm run start`: To run the servers from their production-built mode
+
+#### Getting Started
+
+- Install pnpm `npm install -g pnpm`.
+
+- In root folder: run `pnpm install`.
+
+- Go to `/server` folder, and update the `.env` file from the `.env.template` file and add the PostgreSQL database you created.
+
+- Then run `./node_modules/.bin/prisma generate`, to generate the Prisma schema/files needed.
+
+- Back in the root folder, run `pnpm dev` and you're good to go.
+
+> (Optional): Run `pnpm run prisma:seed` in `/server` to generate example data
