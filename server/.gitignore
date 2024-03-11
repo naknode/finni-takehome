@@ -1,0 +1,78 @@
+.DS_Store
+node_modules
+/dist
+/build
+
+.log
+
+# Delaford
+server.bundled.js
+
+# local env files
+.env.local
+.env.*.local
+
+# PNPM
+.pnpm-debug.log
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# Project specific
+scratchpad.txt
+
+#History Files
+*.history
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.DS_Store
+node_modules
+/dist
+/build
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# Project specific
+scratchpad.txt
+
+#History Files
+*.history
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+
+server_node.js

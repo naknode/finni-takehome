@@ -1,0 +1,19 @@
+{
+  "name": "finni",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Next-generation patient portal",
+  "engines": {
+    "node": "^20",
+    "npm": ">= 10.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm run clean --filter=client --filter=server",
+    "build": "pnpm run build --filter=server",
+    "start": "pnpm run start --filter=server"
+  },
+  "author": "Dan Jasnowski <djasnowski@gmail.com>",
+  "license": "MIT"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "module": "esnext",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf server.bundled.js",
+    "start": "pm2-runtime start -n server -i 1 --env production ./server.bundled.js",
+    "dev": "NODE_ENV=development esno watch index.ts",
+    "debug": "esno --inspect index.ts",
+    "build": "esbuild ./index.ts --platform=node --bundle --outfile=server.bundled.js",
+    "prisma:seed": "esno prisma/seed.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@prisma/client": "^5.10.2",
+    "esno": "^4.7.0",
+    "fastify": "^4.26.2",
+    "fastify-plugin": "^4.5.1",
+    "pm2": "^5.3.1"
+  },
+  "devDependencies": {
+    "@fastify/cors": "^9.0.1",
+    "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.25",
+    "@types/uuid": "^9.0.8",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "date-fns": "^3.3.1",
+    "esbuild": "^0.20.1",
+    "eslint": "^8.57.0",
+    "prisma": "^5.10.2",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.2"
+  }
+}
