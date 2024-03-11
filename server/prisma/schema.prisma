@@ -31,7 +31,7 @@ model Address {
   city          String
   country       String
   patientUuid   String
-  patient       Patient @relation(fields: [patientUuid], references: [uuid])
+  patient       Patient @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
 }
 
 model AdditionalField {
@@ -39,7 +39,7 @@ model AdditionalField {
   type       FieldType
   value      String
   patientUuid String
-  patient    Patient  @relation(fields: [patientUuid], references: [uuid])
+  patient    Patient  @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
 }
 
 enum Status {

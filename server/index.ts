@@ -12,13 +12,13 @@ fastifyServer.get("/patients", async (req, res) => {
   res.send(patients);
 });
 
-interface RequestParamsUpdate {
+interface RequestParams {
   uuid: string;
 }
 
 fastifyServer.patch(
   "/patients/:uuid",
-  async (req: FastifyRequest<{ Params: RequestParamsUpdate }>, res) => {
+  async (req: FastifyRequest<{ Params: RequestParams }>, res) => {
     const { uuid } = req.params;
     const updateData = req.body;
 
@@ -35,6 +35,25 @@ fastifyServer.patch(
       res
         .status(500)
         .send({ error: `Patient update failed: ${error.message}` });
+    }
+  }
+);
+
+fastifyServer.delete(
+  "/patients/:uuid",
+  async (req: FastifyRequest<{ Params: RequestParams }>, res) => {
+    const { uuid } = req.params;
+
+    try {
+      const deletedPatient = await prisma.patient.delete({
+        where: { uuid },
+      });
+
+      res.send({ message: "Patient record successfully deleted" });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ error: `Failed to delete patient: ${error.message}` });
     }
   }
 );
