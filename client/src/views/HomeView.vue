@@ -1,6 +1,4 @@
 <script lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue'
-
 import { useAuth0 } from '@auth0/auth0-vue'
 
 export default {

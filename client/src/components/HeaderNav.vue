@@ -1,13 +1,16 @@
 <template>
   <header
-    class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-blue-600 text-sm py-3 sm:py-0"
+    class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-[#f1eade] text-sm py-3 sm:py-0"
   >
     <nav
       class="relative max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
       aria-label="Global"
     >
       <div class="flex items-center justify-between">
-        <a class="flex-none text-xl font-semibold text-white" href="#" aria-label="finni">finni</a>
+        <img
+          src="https://assets-global.website-files.com/6297d5d89ac9c5b4308579e1/6297d5d89ac9c550828579f0_Logo.svg"
+          alt="Finni Logo"
+        />
         <div class="sm:hidden">
           <button
             type="button"
@@ -57,7 +60,7 @@
         <div
           class="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7"
         >
-          <a class="font-medium text-white sm:py-6" href="#" @click="logout" aria-current="page"
+          <a class="font-medium text-black sm:py-6" href="#" @click="logout" aria-current="page"
             >Logout</a
           >
 

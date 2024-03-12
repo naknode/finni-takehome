@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.3.3",
+    "ag-grid-community": "^31.1.1",
+    "ag-grid-vue3": "^31.1.1",
     "pinia": "^2.1.7",
     "preline": "^2.0.3",
     "vue": "^3.4.21",
