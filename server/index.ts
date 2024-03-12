@@ -5,6 +5,8 @@ const prisma = new PrismaClient();
 
 const fastifyServer = fastify();
 
+void fastifyServer.register(require("@fastify/cors"));
+
 fastifyServer.get("/patients", async (req, res) => {
   const patients = await prisma.patient.findMany({
     include: { additionalFields: true, addresses: true },
