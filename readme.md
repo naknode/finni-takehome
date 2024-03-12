@@ -26,11 +26,13 @@ We utilize pnpm workspaces to better unify the CI/CD procedures for the front an
 
 #### Getting Started
 
+- Create the database `finnitakehome` in PostgreSQL.
+
 - Install pnpm `npm install -g pnpm`.
 
 - In root folder: run `pnpm install`.
 
-- Go to `/server` folder, and update the `.env` file from the `.env.template` file and add the PostgreSQL database you created.
+- Go to `/server` folder, and update the `.env` file from the `.env.template` file with your PostgreSQL credentials and table.
 
 - Then run `./node_modules/.bin/prisma generate`, to generate the Prisma schema/files needed.
 
