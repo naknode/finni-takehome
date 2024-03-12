@@ -1,4 +1,4 @@
-export default function statusCellRenderer(params) {
+export default function statusCellRenderer(params: { value: string }) {
   let badgeColor = ''
   switch (params.value) {
     case 'inquiry':

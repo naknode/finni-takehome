@@ -18,6 +18,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 const patientData = ref(route.params?.state?.patientData || null)
 
 onMounted(async () => {
@@ -31,6 +32,7 @@ onMounted(async () => {
 })
 
 const goBack = () => {
-  window.location.href = '/dashboard'
+  // window.location.href = '/dashboard'
+  router.push('/dashboard')
 }
 </script>

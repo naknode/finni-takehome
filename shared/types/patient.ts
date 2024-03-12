@@ -1,16 +1,16 @@
-enum Status {
+export enum Status {
   Inquiry = "inquiry",
   Onboarding = "onboarding",
   Active = "active",
   Churned = "churned",
 }
 
-enum FieldType {
+export enum FieldType {
   Number = "number",
   String = "string",
 }
 
-interface Patient {
+export type Patient = {
   uuid: string;
   firstName: string;
   middleName?: string;
@@ -19,9 +19,9 @@ interface Patient {
   status: Status;
   addresses: Address[];
   additionalFields: AdditionalField[];
-}
+};
 
-interface Address {
+export type Address = {
   uuid: string;
   streetAddress: string;
   zip: string;
@@ -29,12 +29,12 @@ interface Address {
   country: string;
   patientUuid: string;
   patient: Patient;
-}
+};
 
-interface AdditionalField {
+export type AdditionalField = {
   uuid: string;
   type: FieldType;
   value: string;
   patientUuid: string;
   patient: Patient;
-}
+};

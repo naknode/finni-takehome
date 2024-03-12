@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "lib": ["esnext", "dom"],
-    "module": "ESNext",
+    "module": "esnext",
     "moduleResolution": "node",
     "outDir": "dist",
     "sourceMap": true,
@@ -12,9 +12,9 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@/*": ["./src/*"],
-      "shared": ["./../shared"],
-      "server/*": ["./../server/*"]
+      "shared": ["./../shared"]
     },
     "typeRoots": ["src/types", "node_modules/@types"]
-  }
+  },
+  "include": ["src/**/*", "../shared/*"]
 }

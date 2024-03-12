@@ -16,11 +16,14 @@
 </template>
 
 <script setup>
-import { defineProps, inject } from 'vue'
+import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
 
+import 'vue3-toastify/dist/index.css'
+import { usePatientStore } from '../../stores/patientStore'
+
+const store = usePatientStore()
 const props = defineProps({
   data: Object
 })
@@ -34,9 +37,6 @@ const view = () => {
   })
 }
 
-const gridApi = inject('gridApi')
-const fetchPatients = inject('fetchPatients')
-
 const del = async () => {
   try {
     const response = await fetch(`http://localhost:3000/patients/${props.params.data.uuid}`, {
@@ -48,7 +48,7 @@ const del = async () => {
         `Patient ${props.params.data.firstName} ${props.params.data.lastName} successfully deleted. `
       )
 
-      await fetchPatients()
+      await store.fetchPatients()
     } else {
       toast.error(
         `Failed to delete patient ${props.params.data.firstName} ${props.params.data.lastName}.`

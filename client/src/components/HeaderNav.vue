@@ -67,7 +67,7 @@
           >
 
           <template v-if="isAuthenticated">
-            {{ user.name }}
+            {{ user?.name }}
           </template>
         </div>
       </div>

@@ -2,11 +2,12 @@
   <div class="ag-theme-alpine" style="width: 100%">
     <ag-grid-vue
       :columnDefs="columnDefs"
+      :gridOptions="gridOptions"
+      @row-clicked="onRowClicked"
       :pagination="true"
       :paginationPageSize="10"
       :paginationPageSizeSelector="[10, 25, 50, 100]"
-      @grid-ready="onGridReady"
-      :rowData="rowData"
+      :rowData="props.data"
       class="ag-theme-alpine"
       style="height: 520px"
       :defaultColDef="defaultColDef"
@@ -15,20 +16,34 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { format, differenceInYears } from 'date-fns'
-import { ref, onMounted, provide } from 'vue'
+import { ref, defineProps } from 'vue'
 import { AgGridVue } from 'ag-grid-vue3'
 import 'ag-grid-community/styles/ag-grid.css'
+import type { RowClickedEvent, ValueFormatterParams, ValueGetterParams } from 'ag-grid-community'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
-import ActionRenderer from './renderer/ActionRenderer.vue'
 import statusCellRenderer from './renderer/statusCellRenderer'
+import type { Patient } from 'shared'
+import router from '@/router'
 
 const defaultColDef = ref({
   filter: 'agTextColumnFilter',
   floatingFilter: true
 })
+
+const gridOptions = {
+  getRowStyle: () => ({
+    cursor: 'pointer'
+  })
+}
+
+interface Props {
+  data: Patient[]
+}
+
+const props = defineProps<Props>()
 
 const columnDefs = [
   { headerName: 'First Name', field: 'firstName', flex: 1, filter: true },
@@ -37,51 +52,23 @@ const columnDefs = [
   {
     headerName: 'Date of Birth',
     field: 'dateOfBirth',
-    valueFormatter: (params) => format(new Date(params.value), 'MM/dd/yyyy'),
+    valueFormatter: (params: ValueFormatterParams) => format(new Date(params.value), 'MM/dd/yyyy'),
     flex: 1
   },
   {
     headerName: 'Age',
     field: 'dateOfBirth',
-    valueGetter: (params) => differenceInYears(new Date(), new Date(params.data.dateOfBirth)),
+    valueGetter: (params: ValueGetterParams) =>
+      differenceInYears(new Date(), new Date(params.data.dateOfBirth)),
     flex: 1,
     filter: true
   },
-  { headerName: 'Status', field: 'status', filter: true, cellRenderer: statusCellRenderer },
-  {
-    headerName: '',
-    cellRenderer: ActionRenderer,
-    minWidth: 150,
-    filter: false,
-    sort: false
-  }
+  { headerName: 'Status', field: 'status', filter: true, cellRenderer: statusCellRenderer }
 ]
 
-const rowData = ref([])
+const onRowClicked = (event: RowClickedEvent) => {
+  const patientUuid = event.data.uuid
 
-const gridApi = ref(null)
-const gridColumnApi = ref(null)
-
-const onGridReady = (params) => {
-  gridApi.value = params.api
-  gridColumnApi.value = params.columnApi
+  router.push({ name: 'patient', params: { uuid: patientUuid } })
 }
-
-const fetchPatients = async () => {
-  const response = await fetch('http://localhost:3000/patients')
-  if (response.ok) {
-    rowData.value = await response.json()
-  } else {
-    console.error('Failed to fetch patient data')
-  }
-}
-
-provide('gridApi', gridApi)
-provide('fetchPatients', fetchPatients)
-
-onMounted(async () => {
-  fetchPatients()
-})
 </script>
-
-<style scoped></style>

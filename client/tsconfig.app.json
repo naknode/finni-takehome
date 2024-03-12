@@ -1,16 +1,18 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "../shared/**/*", "src/vue-shims.d.ts"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
+    "rootDir": "../",
+    "baseUrl": ".",
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "shared/*": ["./../shared/*"]
+      "shared": ["./../shared"]
     },
-    "types": ["vue3-toastify/global"]
+    "types": ["vue3-toastify/global"],
+    "skipLibCheck": true
   }
 }
