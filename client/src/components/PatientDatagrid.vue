@@ -22,7 +22,8 @@ import { AgGridVue } from 'ag-grid-vue3'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
-import ActionRenderer from './ActionRenderer.vue'
+import ActionRenderer from './renderer/ActionRenderer.vue'
+import statusCellRenderer from './renderer/statusCellRenderer'
 
 const defaultColDef = ref({
   filter: 'agTextColumnFilter',
@@ -46,7 +47,7 @@ const columnDefs = [
     flex: 1,
     filter: true
   },
-  { headerName: 'Status', field: 'status', filter: true },
+  { headerName: 'Status', field: 'status', filter: true, cellRenderer: statusCellRenderer },
   {
     headerName: '',
     cellRenderer: ActionRenderer,
