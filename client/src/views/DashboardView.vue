@@ -1,6 +1,10 @@
+<script>
+import DefaultLayout from '../layouts/DefaultLayout.vue'
+</script>
+
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>This is a DASHBAORD page</h1>
   </div>
 </template>
 
