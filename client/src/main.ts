@@ -11,19 +11,19 @@ import './index.css'
 
 const app = createApp(App)
 
-app.use(createPinia()).use(router)
+app.use(createPinia())
+app.use(router)
 app.use(Vue3Toastify, {
   autoClose: 3000
 } as ToastContainerOptions)
+app.use(
+  createAuth0({
+    domain: 'finni.us.auth0.com',
+    clientId: 'NykEDjuqusTEx8fYe8RrdtVInKoBWGgd',
+    authorizationParams: {
+      redirect_uri: window.location.origin
+    }
+  })
+)
 
-app
-  .use(
-    createAuth0({
-      domain: 'finni.us.auth0.com',
-      clientId: 'NykEDjuqusTEx8fYe8RrdtVInKoBWGgd',
-      authorizationParams: {
-        redirect_uri: window.location.origin
-      }
-    })
-  )
-  .mount('#app')
+app.mount('#app')

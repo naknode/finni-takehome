@@ -7,10 +7,11 @@
       aria-label="Global"
     >
       <div class="flex items-center justify-between">
-        <img
-          src="https://assets-global.website-files.com/6297d5d89ac9c5b4308579e1/6297d5d89ac9c550828579f0_Logo.svg"
-          alt="Finni Logo"
-        />
+        <a href="/dashboard">
+          <img
+            src="https://assets-global.website-files.com/6297d5d89ac9c5b4308579e1/6297d5d89ac9c550828579f0_Logo.svg"
+            alt="Finni Logo"
+        /></a>
         <div class="sm:hidden">
           <button
             type="button"

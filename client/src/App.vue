@@ -1,7 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
-// Import your layouts
 import DefaultLayout from './layouts/DefaultLayout.vue'
 import EmptyLayout from './layouts/EmptyLayout.vue'
 

@@ -1,5 +1,6 @@
 import fastify, { FastifyRequest } from "fastify";
 import { PrismaClient } from "@prisma/client";
+import { Patient } from "shared/types";
 
 const prisma = new PrismaClient();
 
@@ -14,15 +15,13 @@ fastifyServer.get("/patients", async (req, res) => {
   res.send(patients);
 });
 
-interface RequestParams {
-  uuid: string;
-}
+type PatientWithUuidOnly = Pick<Patient, "uuid">;
 
 fastifyServer.patch(
   "/patients/:uuid",
-  async (req: FastifyRequest<{ Params: RequestParams }>, res) => {
+  async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
     const { uuid } = req.params;
-    const updateData = req.body;
+    const updateData = req.body as Patient;
 
     try {
       const updatedPatient = await prisma.patient.update({
@@ -41,9 +40,30 @@ fastifyServer.patch(
   }
 );
 
+fastifyServer.get(
+  "/patient/:uuid",
+  async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
+    const { uuid } = req.params;
+
+    try {
+      const getPatient = await prisma.patient.findUnique({
+        where: {
+          uuid,
+        },
+      });
+
+      res.send(getPatient);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ error: `Failed to get patient: ${error.message}` });
+    }
+  }
+);
+
 fastifyServer.delete(
   "/patients/:uuid",
-  async (req: FastifyRequest<{ Params: RequestParams }>, res) => {
+  async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
     const { uuid } = req.params;
 
     try {

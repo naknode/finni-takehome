@@ -16,17 +16,22 @@
 </template>
 
 <script setup>
-import { defineProps, getCurrentInstance, inject } from 'vue'
+import { defineProps, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+
 const props = defineProps({
   data: Object
 })
 
-const instance = getCurrentInstance()
+const router = useRouter()
 
 const view = () => {
-  console.log(props.params.data.uuid)
+  router.push({
+    name: 'patient',
+    params: { data: props.params.data, uuid: props.params.data.uuid }
+  })
 }
 
 const gridApi = inject('gridApi')
