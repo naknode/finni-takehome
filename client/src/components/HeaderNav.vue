@@ -7,11 +7,12 @@
       aria-label="Global"
     >
       <div class="flex items-center justify-between">
-        <a href="/dashboard">
+        <button @click="goToDashboard">
           <img
             src="https://assets-global.website-files.com/6297d5d89ac9c5b4308579e1/6297d5d89ac9c550828579f0_Logo.svg"
             alt="Finni Logo"
-        /></a>
+          />
+        </button>
         <div class="sm:hidden">
           <button
             type="button"
@@ -61,7 +62,7 @@
         <div
           class="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7"
         >
-          <a class="font-medium text-black sm:py-6" href="#" @click="logout" aria-current="page"
+          <a class="font-medium text-black sm:py-6" href="#" @click="logoutBtn" aria-current="page"
             >Logout</a
           >
 
@@ -74,21 +75,18 @@
   </header>
 </template>
 
-<script>
+<script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue'
+import { useRouter } from 'vue-router'
 
-export default {
-  name: 'HeaderNav',
-  setup() {
-    const { user, isAuthenticated, logout } = useAuth0()
+const { user, isAuthenticated, logout } = useAuth0()
+const router = useRouter()
 
-    return {
-      logout: () => {
-        logout({ logoutParams: { returnTo: window.location.origin } })
-      },
-      user,
-      isAuthenticated
-    }
-  }
+function logoutBtn() {
+  logout({ logoutParams: { returnTo: window.location.origin } })
+}
+
+function goToDashboard() {
+  router.push('/dashboard')
 }
 </script>
