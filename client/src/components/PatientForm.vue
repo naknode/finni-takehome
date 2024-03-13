@@ -152,8 +152,10 @@ async function submitForm() {
   }
 }
 
-async function deletePatient() {
+async function deletePatient(event: Event) {
   try {
+    event.preventDefault()
+
     const response = await fetch(`http://localhost:3000/patients/${patient.value?.uuid}`, {
       method: 'DELETE'
     })
