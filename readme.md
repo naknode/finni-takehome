@@ -36,6 +36,8 @@ We utilize pnpm workspaces to better unify the CI/CD procedures for the front an
 
 - Then run `./node_modules/.bin/prisma generate`, to generate the Prisma schema/files needed.
 
+- Then run `pnpm exec prisma migrate dev --name init` to create the tables with the schemas on the database.
+
 - Back in the root folder, run `pnpm dev` and you're good to go.
 
 > (Optional): Run `pnpm run prisma:seed` in `/server` to generate example data

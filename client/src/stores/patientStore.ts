@@ -11,6 +11,15 @@ export const usePatientStore = defineStore('patients', () => {
     patients.value = state
   }
 
+  async function getPatient(uuid: string) {
+    if (patients.value.length) {
+      return patients.value.find((p) => p.uuid === uuid)
+    } else {
+      const data = await fetchPatient(uuid)
+      return data
+    }
+  }
+
   async function fetchPatients() {
     try {
       const response = await fetch('http://localhost:3000/patients')
@@ -25,5 +34,18 @@ export const usePatientStore = defineStore('patients', () => {
     }
   }
 
-  return { getAllPatients, updateState, patients, fetchPatients }
+  async function fetchPatient(uuid: string) {
+    try {
+      const response = await fetch('http://localhost:3000/patient/' + uuid)
+      if (response.ok) {
+        return await response.json()
+      } else {
+        console.error('Failed to fetch patient data')
+      }
+    } catch (error) {
+      console.error('Error fetching patients:', error)
+    }
+  }
+
+  return { getAllPatients, updateState, patients, fetchPatients, getPatient, fetchPatient }
 })

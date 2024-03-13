@@ -39,7 +39,7 @@ CREATE TABLE "AdditionalField" (
 );
 
 -- AddForeignKey
-ALTER TABLE "Address" ADD CONSTRAINT "Address_patientUuid_fkey" FOREIGN KEY ("patientUuid") REFERENCES "Patient"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Address" ADD CONSTRAINT "Address_patientUuid_fkey" FOREIGN KEY ("patientUuid") REFERENCES "Patient"("uuid") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AdditionalField" ADD CONSTRAINT "AdditionalField_patientUuid_fkey" FOREIGN KEY ("patientUuid") REFERENCES "Patient"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "AdditionalField" ADD CONSTRAINT "AdditionalField_patientUuid_fkey" FOREIGN KEY ("patientUuid") REFERENCES "Patient"("uuid") ON DELETE CASCADE ON UPDATE CASCADE;
