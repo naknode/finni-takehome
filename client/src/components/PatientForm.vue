@@ -74,9 +74,17 @@
         </div>
       </div>
 
-      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
-        Save
-      </button>
+      <div class="flex justify-between">
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
+          Save
+        </button>
+        <button
+          @click="deletePatient"
+          class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700"
+        >
+          Delete
+        </button>
+      </div>
     </form>
   </div>
 </template>
@@ -87,6 +95,7 @@ import type { Patient } from 'shared'
 import { format, formatISO } from 'date-fns'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   data: Patient
@@ -97,6 +106,8 @@ const patient = ref<Patient | null>(null)
 const formattedDateOfBirth = computed(() => {
   return patient.value ? format(new Date(patient.value.dateOfBirth), 'yyyy-MM-dd') : null
 })
+
+const router = useRouter()
 
 onMounted(async () => {
   patient.value = props.data
@@ -126,6 +137,9 @@ async function submitForm() {
     })
 
     if (!response.ok) {
+      toast.error(
+        `Failed to update patient ${patient.value?.firstName} ${patient.value?.lastName}.`
+      )
       throw new Error(`There was an error: ${response.status}`)
     }
 
@@ -135,6 +149,29 @@ async function submitForm() {
     )
   } catch (error) {
     console.error('Error submitting form... ', error)
+  }
+}
+
+async function deletePatient() {
+  try {
+    const response = await fetch(`http://localhost:3000/patients/${patient.value?.uuid}`, {
+      method: 'DELETE'
+    })
+    if (response.ok) {
+      router.push('/dashboard')
+      setTimeout(() => {
+        toast.success(
+          `Patient ${patient.value?.firstName} ${patient.value?.lastName} successfully deleted. `
+        )
+      }, 200)
+    } else {
+      toast.error(
+        `Failed to delete patient ${patient.value?.firstName} ${patient.value?.lastName}.`
+      )
+      throw new Error('Failed to delete patient')
+    }
+  } catch (error) {
+    console.error(error)
   }
 }
 </script>
