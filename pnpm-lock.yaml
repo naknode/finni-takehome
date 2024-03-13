@@ -19,6 +19,9 @@ importers:
       ag-grid-vue3:
         specifier: ^31.1.1
         version: 31.1.1(vue@3.4.21)
+      date-fns:
+        specifier: ^3.3.1
+        version: 3.4.0
       pinia:
         specifier: ^2.1.7
         version: 2.1.7(typescript@5.4.2)(vue@3.4.21)
@@ -150,9 +153,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.1.1
         version: 7.2.0(eslint@8.57.0)(typescript@5.4.2)
-      date-fns:
-        specifier: ^3.3.1
-        version: 3.4.0
       esbuild:
         specifier: ^0.20.1
         version: 0.20.1
@@ -2507,7 +2507,7 @@ packages:
 
   /date-fns@3.4.0:
     resolution: {integrity: sha512-Akz4R8J9MXBsOgF1QeWeCsbv6pntT5KCPjU0Q9prBxVmWJYPLhwAIsNg3b0QAdr0ttiozYLD3L/af7Ra0jqYXw==, tarball: https://registry.npmjs.org/date-fns/-/date-fns-3.4.0.tgz}
-    dev: true
+    dev: false
 
   /dayjs@1.11.10:
     resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==, tarball: https://registry.npmjs.org/dayjs/-/dayjs-1.11.10.tgz}

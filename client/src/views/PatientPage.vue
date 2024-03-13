@@ -1,5 +1,5 @@
 <template>
-  <div class="relative max-w-[85rem] w-full mx-auto px-8 flex-col">
+  <div class="relative max-w-[85rem] w-full mx-auto px-8 flex-col" v-if="patientData">
     <div class="flex justify-between items-center">
       <h1 class="text-4xl my-8">{{ patientData?.firstName }} {{ patientData?.lastName }}</h1>
       <button
@@ -10,6 +10,8 @@
         Go back
       </button>
     </div>
+
+    <PatientForm :data="patientData" />
   </div>
 </template>
 
@@ -17,22 +19,22 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { usePatientStore } from '../stores/patientStore'
+import PatientForm from '@/components/PatientForm.vue'
+
+const store = usePatientStore()
+
+const patientData = ref()
 const route = useRoute()
 const router = useRouter()
-const patientData = ref(route.params?.state?.patientData || null)
+const uuid = ref(route.params.uuid || null)
 
 onMounted(async () => {
-  const uuid = route.params.uuid
-  const response = await fetch(`http://localhost:3000/patient/${uuid}`)
-  if (response.ok) {
-    patientData.value = await response.json()
-  } else {
-    console.error('Failed to fetch patient data')
-  }
+  const data = await store.fetchPatient(uuid.value)
+  patientData.value = data
 })
 
 const goBack = () => {
-  // window.location.href = '/dashboard'
   router.push('/dashboard')
 }
 </script>

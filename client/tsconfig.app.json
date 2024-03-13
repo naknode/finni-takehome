@@ -9,7 +9,7 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./client/src/*"],
       "shared": ["./../shared"]
     },
     "types": ["vue3-toastify/global"],

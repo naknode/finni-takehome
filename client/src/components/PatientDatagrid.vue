@@ -26,7 +26,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css'
 
 import statusCellRenderer from './renderer/statusCellRenderer'
 import type { Patient } from 'shared'
-import router from '@/router'
+import router from '../router'
 
 const defaultColDef = ref({
   filter: 'agTextColumnFilter',
