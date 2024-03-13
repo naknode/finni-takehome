@@ -22,7 +22,7 @@ export const usePatientStore = defineStore('patients', () => {
 
   async function fetchPatients() {
     try {
-      const response = await fetch('http://localhost:3000/patients')
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/patients`)
 
       if (response.ok) {
         patients.value = await response.json()
@@ -36,7 +36,7 @@ export const usePatientStore = defineStore('patients', () => {
 
   async function fetchPatient(uuid: string) {
     try {
-      const response = await fetch('http://localhost:3000/patient/' + uuid)
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/patient/${uuid}`)
       if (response.ok) {
         return await response.json()
       } else {

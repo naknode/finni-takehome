@@ -38,6 +38,8 @@ We utilize pnpm workspaces to better unify the CI/CD procedures for the front an
 
 - Then run `pnpm exec prisma migrate dev --name init` to create the tables with the schemas on the database.
 
+- Update the `client/.env` environment file with the backend URL, if you have too. (Port 3000 might be taken.)
+
 - Back in the root folder, run `pnpm dev` and you're good to go.
 
 > (Optional): Run `pnpm run prisma:seed` in `/server` to generate example data
