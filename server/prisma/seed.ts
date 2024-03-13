@@ -27,6 +27,7 @@ async function main() {
             {
               uuid: faker.string.uuid(),
               streetAddress: faker.location.streetAddress(),
+              state: faker.location.state(),
               zip: faker.location.zipCode(),
               city: faker.location.city(),
               country: faker.location.country(),

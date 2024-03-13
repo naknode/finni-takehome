@@ -27,9 +27,10 @@ model Patient {
 model Address {
   uuid          String   @id @default(uuid())
   streetAddress String
-  zip           String
   city          String
   country       String
+  state         String
+  zip           String
   patientUuid   String
   patient       Patient @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
 }

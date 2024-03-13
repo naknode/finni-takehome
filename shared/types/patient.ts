@@ -24,6 +24,7 @@ export type Patient = {
 export type Address = {
   uuid: string;
   streetAddress: string;
+  state: string;
   zip: string;
   city: string;
   country: string;
