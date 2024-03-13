@@ -1,30 +1,34 @@
 <template>
   <div class="max-w-xl mx-auto py-4" v-if="patient">
     <form @submit.prevent="submitForm" class="space-y-4">
-      <div class="mb-6">
-        <label
-          for="large-input"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >First Name</label
-        >
-        <input
-          type="text"
-          id="firstName"
-          v-model="patient.firstName"
-          class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
+      <div class="flex flex-row justify-between items-center mb-6">
+        <div class="size-full pr-10">
+          <label
+            for="firstName"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >First Name</label
+          >
+          <input
+            type="text"
+            id="firstName"
+            v-model="patient.firstName"
+            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
 
-      <div class="mb-6">
-        <label for="middleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Middle Name</label
-        >
-        <input
-          type="text"
-          id="middleName"
-          v-model="patient.middleName"
-          class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
+        <div class="size-full">
+          <label
+            for="middleName"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Middle Name</label
+          >
+          <input
+            type="text"
+            id="middleName"
+            v-model="patient.middleName"
+            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
       </div>
 
       <div class="mb-6">
@@ -39,33 +43,35 @@
         />
       </div>
 
-      <div>
-        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Date of Birth</label
-        >
-        <input
-          type="date"
-          @input="updateDateOfBirth($event)"
-          :value="formattedDateOfBirth"
-          id="dateOfBirth"
-          class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
+      <div class="flex flex-row justify-between items-center">
+        <div class="size-full pr-10">
+          <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Date of Birth</label
+          >
+          <input
+            type="date"
+            @input="updateDateOfBirth($event)"
+            :value="formattedDateOfBirth"
+            id="dateOfBirth"
+            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
 
-      <div>
-        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Status</label
-        >
-        <select
-          v-model="patient.status"
-          id="status"
-          class="p-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="inquiry">Inquiry</option>
-          <option value="onboarding">Onboarding</option>
-          <option value="active">Active</option>
-          <option value="churned">Churned</option>
-        </select>
+        <div class="size-full">
+          <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Status</label
+          >
+          <select
+            v-model="patient.status"
+            id="status"
+            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="inquiry">Inquiry</option>
+            <option value="onboarding">Onboarding</option>
+            <option value="active">Active</option>
+            <option value="churned">Churned</option>
+          </select>
+        </div>
       </div>
 
       <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
