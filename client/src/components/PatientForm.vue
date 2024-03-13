@@ -76,7 +76,7 @@
 
       <div class="flex justify-between pt-10">
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
-          Save
+          Update Patient
         </button>
         <button
           @click="deletePatient"
