@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-xl mx-auto py-4" v-if="patient">
+  <div class="py-4" v-if="patient">
     <form @submit.prevent="submitForm" class="space-y-4">
       <div class="flex flex-row justify-between items-center mb-6">
         <div class="size-full pr-10">
@@ -43,7 +43,7 @@
         />
       </div>
 
-      <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-row justify-between items-center mb-6">
         <div class="size-full pr-10">
           <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Date of Birth</label
