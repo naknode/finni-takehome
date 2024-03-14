@@ -1,6 +1,6 @@
 import fastify, { FastifyRequest } from "fastify";
 import { PrismaClient } from "@prisma/client";
-import type { Patient, Address } from "shared/types";
+import type { Patient, Address, AdditionalField } from "shared/types";
 
 const prisma = new PrismaClient();
 
@@ -22,12 +22,12 @@ fastifyServer.get("/patients", async (req, res) => {
 type PatientWithUuidOnly = Pick<Patient, "uuid">;
 type AddressWithUuidOnly = Pick<Address, "uuid">;
 
-// Update Patient (create/update addresses)
+// Update Patient (create/update addresses and additional fields)
 fastifyServer.patch(
   "/patients/:uuid",
   async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
     const { uuid } = req.params;
-    const { addresses, ...updateData } = req.body as Patient;
+    const { addresses, additionalFields, ...updateData } = req.body as Patient;
 
     try {
       const updatedPatient = await prisma.patient.update({
@@ -35,33 +35,19 @@ fastifyServer.patch(
         data: updateData,
       });
 
-      if (addresses && addresses.length > 0) {
-        const addressPromises = addresses.map(async (address: Address) => {
-          if (address.toDelete && address.uuid) {
-            return prisma.address.delete({
-              where: { uuid: address.uuid },
-            });
-          } else if (address.uuid) {
-            return prisma.address.update({
-              where: { uuid: address.uuid },
-              data: { ...address, patientUuid: uuid },
-            });
-          } else {
-            return prisma.address.create({
-              data: { ...address, patientUuid: uuid },
-            });
-          }
-        });
+      await updateRelatedEntities(uuid, addresses, prisma.address);
+      await updateRelatedEntities(
+        uuid,
+        additionalFields,
+        prisma.additionalField
+      );
 
-        await Promise.all(addressPromises);
-      }
-
-      const patientWithUpdatedAddresses = await prisma.patient.findUnique({
+      const updatedPatientWithEverything = await prisma.patient.findUnique({
         where: { uuid: updatedPatient.uuid },
-        include: { addresses: true },
+        include: { addresses: true, additionalFields: true },
       });
 
-      res.send(patientWithUpdatedAddresses);
+      res.send(updatedPatientWithEverything);
     } catch (error) {
       res
         .status(500)
@@ -69,6 +55,34 @@ fastifyServer.patch(
     }
   }
 );
+
+// Update/Create Addresses or Additional Fields
+async function updateRelatedEntities(
+  uuid: string,
+  entities: Address | AdditionalField,
+  prismaModel
+) {
+  if (entities && entities.length > 0) {
+    const promises = entities.map(async (entity) => {
+      if (entity.toDelete && entity.uuid) {
+        return prismaModel.delete({
+          where: { uuid: entity.uuid },
+        });
+      } else if (entity.uuid) {
+        return prismaModel.update({
+          where: { uuid: entity.uuid },
+          data: { ...entity, patientUuid: uuid },
+        });
+      } else {
+        return prismaModel.create({
+          data: { ...entity, patientUuid: uuid },
+        });
+      }
+    });
+
+    await Promise.all(promises);
+  }
+}
 
 // Get Patient details
 fastifyServer.get(
@@ -83,6 +97,11 @@ fastifyServer.get(
         },
         include: {
           addresses: {
+            orderBy: {
+              createdAt: "asc",
+            },
+          },
+          additionalFields: {
             orderBy: {
               createdAt: "asc",
             },
@@ -111,6 +130,9 @@ fastifyServer.post(
           ...patientData,
           addresses: {
             create: [...addresses],
+          },
+          additionalFields: {
+            create: [...additionalFields],
           },
         },
       });

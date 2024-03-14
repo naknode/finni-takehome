@@ -39,6 +39,7 @@ model Address {
 
 model AdditionalField {
   uuid       String   @id @default(uuid())
+  createdAt     DateTime  @default(now())
   type       FieldType
   value      String
   label      String

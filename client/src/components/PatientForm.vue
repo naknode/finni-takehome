@@ -80,6 +80,12 @@
         @update:addresses="updateAddresses"
       />
 
+      <PatientAdditionalFields
+        :existingAdditionalFields="patient.additionalFields"
+        :creating="props.creating"
+        @update:additionalField="updateAdditionalFields"
+      />
+
       <div class="flex justify-between pt-10">
         <button
           type="submit"
@@ -104,13 +110,14 @@
 <script setup lang="ts">
 import { TrashIcon, PlusIcon } from '@heroicons/vue/24/outline'
 import { computed, onMounted, ref, watch } from 'vue'
-import type { Patient } from 'shared'
+import type { AdditionalField, Address, Patient } from 'shared'
 import { format, formatISO } from 'date-fns'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import { useRouter } from 'vue-router'
 
 import PatientAddresses from './PatientAddresses.vue'
+import PatientAdditionalFields from './PatientAdditionalFields.vue'
 
 const props = defineProps<{
   data: Patient
@@ -119,9 +126,15 @@ const props = defineProps<{
 
 const emits = defineEmits(['refresh:patient'])
 
-const updateAddresses = (updatedAddresses: Patient['addresses']) => {
+const updateAddresses = (updatedAddresses: Address[]) => {
   if (patient.value) {
     patient.value.addresses = updatedAddresses
+  }
+}
+
+const updateAdditionalFields = (updateAdditionalFields: AdditionalField[]) => {
+  if (patient.value) {
+    patient.value.additionalFields = updateAdditionalFields
   }
 }
 

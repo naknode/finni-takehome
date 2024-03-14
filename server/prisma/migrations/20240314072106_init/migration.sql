@@ -34,6 +34,7 @@ CREATE TABLE "Address" (
 -- CreateTable
 CREATE TABLE "AdditionalField" (
     "uuid" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "type" "FieldType" NOT NULL,
     "value" TEXT NOT NULL,
     "label" TEXT NOT NULL,

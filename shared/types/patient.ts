@@ -34,7 +34,9 @@ export type Address = {
 
 export type AdditionalField = {
   uuid?: string;
+  toDelete?: boolean;
   type: FieldType;
   value: string;
+  label: string;
   patientUuid?: string;
 };
