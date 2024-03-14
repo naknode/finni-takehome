@@ -15,6 +15,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function goBack() {
-  router.back()
+  // Go back to dashboard. :)
+  router.push('/dashboard')
 }
 </script>
