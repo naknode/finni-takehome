@@ -31,14 +31,12 @@ We utilize pnpm workspaces to better unify the CI/CD procedures for the front an
 
 - Install pnpm `npm install -g pnpm`.
 
-- In root folder: run `pnpm install`.
+- Run `pnpm install` to install all workspace package modules.
 
-- Then run `pnpm prisma:start` to have your database in sync with the Prisma schema
+- Then run `pnpm prisma:start` to have your database in sync with the Prisma schema.
 
-- Go to `/server` folder, and create the `.env` file from the `.env.template` file with your PostgreSQL credentials.
+- Copy the `.env.template` env file from both `client/` and `server/` to their respective `.env` files and modify accordingly. 
 
-- Copy the `client/.env.template` env file to `client/.env` (Port 3000 might be taken?)
-
-- Back in the root folder, run `pnpm dev` and you're good to go.
+- Finally, run `pnpm dev` and you're good to go.
 
 > (Optional): Run `pnpm run prisma:seed` in `/server` to generate example data
