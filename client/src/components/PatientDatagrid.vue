@@ -1,15 +1,15 @@
 <template>
-  <div class="ag-theme-alpine" style="width: 100%">
+  <div class="ag-theme-alpine grid-container" style="width: 100%">
     <ag-grid-vue
       :columnDefs="columnDefs"
       :gridOptions="gridOptions"
       @row-clicked="onRowClicked"
       :pagination="true"
-      :paginationPageSize="10"
+      :paginationPageSize="25"
       :paginationPageSizeSelector="[10, 25, 50, 100]"
       :rowData="filteredData"
       class="ag-theme-alpine"
-      style="height: 520px"
+      style="height: 100%"
       :defaultColDef="defaultColDef"
       :animateRows="true"
     ></ag-grid-vue>
@@ -96,3 +96,13 @@ const onRowClicked = (event: RowClickedEvent) => {
   router.push({ name: 'patient', params: { uuid: patientUuid } })
 }
 </script>
+<style scoped>
+.grid-container {
+  height: calc(100vh - 275px);
+}
+
+.full-height-grid {
+  width: 100%;
+  height: 100%;
+}
+</style>

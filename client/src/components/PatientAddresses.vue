@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto py-4">
-    <h2 class="text-3xl">Addresses ({{ addressesTotal }})</h2>
+    <h2 class="text-3xl mb-4">Addresses ({{ addressesTotal }})</h2>
     <div
       v-for="(address, index) in addresses"
       :key="index"
