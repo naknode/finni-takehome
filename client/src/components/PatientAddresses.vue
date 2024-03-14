@@ -1,13 +1,13 @@
 <template>
   <div class="mx-auto py-4">
-    <h2 class="text-3xl">Addresses ({{ addresses.length }})</h2>
+    <h2 class="text-3xl">Addresses ({{ addressesTotal }})</h2>
     <div
       v-for="(address, index) in addresses"
       :key="index"
       class="my-4 pb-5"
       :class="{
         'bg-yellow-50': !address.uuid,
-        'bg-red-50 p-2 rounded-lg address-to-be-deleted-border': address.toDelete,
+        'bg-red-50 p-2 rounded-lg ': address.toDelete,
         'address-seperator': !address.toDelete
       }"
     >
@@ -38,7 +38,7 @@
         <div class="flex-shrink-0">
           <button
             @click="restoreAddress(index, $event)"
-            class="mb-2 text-orange-700 hover:text-white border border-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-orange-500 dark:text-orange-500 dark:hover:text-white dark:hover:bg-orange-600 dark:focus:ring-orange-900"
+            class="mb-2 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
           >
             Restore Address
           </button>
@@ -386,7 +386,7 @@
 
 <script setup lang="ts">
 import { faker } from '@faker-js/faker'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { Address } from 'shared'
 import { useRoute } from 'vue-router'
 
@@ -401,6 +401,8 @@ const props = defineProps({
 })
 
 const patientUuid = (route.params.uuid as string) || undefined
+
+const addressesTotal = computed(() => addresses.value.filter((address) => !address.toDelete).length)
 
 const newAddress = (): Address => ({
   streetAddress: faker.location.streetAddress(),
@@ -452,8 +454,5 @@ const removeAddress = async (index: number, event: Event) => {
 <style scoped>
 .address-seperator {
   border-bottom: 1px solid #cccccc;
-}
-.address-to-be-deleted-border {
-  border: 2px dashed rgb(239, 135, 195);
 }
 </style>
