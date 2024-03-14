@@ -9,13 +9,14 @@ const fastifyServer = fastify();
 void fastifyServer.register(require("@fastify/cors"));
 
 // Get all patients
-fastifyServer.get("/patients", async (req, res) => {
+fastifyServer.get("/patients", async (_, res) => {
   const patients = await prisma.patient.findMany({
     include: { additionalFields: true, addresses: true },
     orderBy: {
       createdAt: "asc",
     },
   });
+
   res.send(patients);
 });
 
@@ -63,7 +64,7 @@ async function updateRelatedEntities(
   prismaModel
 ) {
   if (entities && entities.length > 0) {
-    const promises = entities.map(async (entity) => {
+    const promises = entities.map(async (entity: Address | AdditionalField) => {
       if (entity.toDelete && entity.uuid) {
         return prismaModel.delete({
           where: { uuid: entity.uuid },

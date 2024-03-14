@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,7 +9,7 @@ datasource db {
 
 model Patient {
   uuid             String            @id @default(uuid())
-  createdAt     DateTime  @default(now())
+  createdAt        DateTime          @default(now())
   firstName        String
   middleName       String?
   lastName         String
@@ -27,24 +21,24 @@ model Patient {
 
 model Address {
   uuid          String   @id @default(uuid())
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime @default(now())
   streetAddress String
   city          String
   country       String
   state         String
   zip           String
   patientUuid   String
-  patient       Patient @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
+  patient       Patient  @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
 }
 
 model AdditionalField {
-  uuid       String   @id @default(uuid())
-  createdAt     DateTime  @default(now())
-  type       FieldType
-  value      String
-  label      String
+  uuid        String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  type        FieldType
+  value       String
+  label       String
   patientUuid String
-  patient    Patient  @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
+  patient     Patient   @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
 }
 
 enum Status {
