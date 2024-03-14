@@ -76,6 +76,7 @@
 
       <PatientAddresses
         :existingAddresses="patient.addresses"
+        :creating="props.creating"
         @update:addresses="updateAddresses"
       />
 

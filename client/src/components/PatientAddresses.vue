@@ -6,7 +6,7 @@
       :key="index"
       class="my-4 pb-5"
       :class="{
-        'bg-yellow-50': !address.uuid,
+        'bg-yellow-50': !address.uuid && !props.creating,
         'bg-red-50 p-2 rounded-lg ': address.toDelete,
         'address-seperator': !address.toDelete
       }"
@@ -407,6 +407,10 @@ const props = defineProps({
   existingAddresses: {
     type: Array as () => Address[],
     default: () => []
+  },
+  creating: {
+    type: Boolean,
+    default: false
   }
 })
 
