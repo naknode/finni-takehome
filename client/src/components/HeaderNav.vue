@@ -57,18 +57,20 @@
       </div>
       <div
         id="navbar-collapse-with-animation"
-        class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
+        class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block py-5"
       >
         <div
-          class="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7"
+          class="flex flex-col items-center gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7"
         >
-          <a class="font-medium text-black sm:py-6" href="#" @click="logoutBtn" aria-current="page"
-            >Logout</a
+          <button
+            @click="logoutBtn"
+            type="button"
+            class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
           >
+            Logout
+          </button>
 
-          <template v-if="isAuthenticated">
-            {{ user?.name }}
-          </template>
+          <template v-if="isAuthenticated"> Welcome, {{ user?.name }}. </template>
         </div>
       </div>
     </nav>
