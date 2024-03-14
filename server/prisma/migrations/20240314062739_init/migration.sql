@@ -36,6 +36,7 @@ CREATE TABLE "AdditionalField" (
     "uuid" TEXT NOT NULL,
     "type" "FieldType" NOT NULL,
     "value" TEXT NOT NULL,
+    "label" TEXT NOT NULL,
     "patientUuid" TEXT NOT NULL,
 
     CONSTRAINT "AdditionalField_pkey" PRIMARY KEY ("uuid")

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { FieldType, PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 
 const prisma = new PrismaClient();
@@ -8,6 +8,11 @@ async function main() {
 
   for (let i = 0; i < numberOfPatients; i++) {
     const patientUuid = faker.string.uuid();
+
+    const additionalFieldType: FieldType = faker.helpers.arrayElement([
+      "number",
+      "string",
+    ]);
 
     await prisma.patient.create({
       data: {
@@ -38,8 +43,12 @@ async function main() {
           create: [
             {
               uuid: faker.string.uuid(),
-              type: faker.helpers.arrayElement(["number", "string"]),
-              value: faker.lorem.words(2),
+              type: additionalFieldType,
+              label: faker.lorem.words(1),
+              value:
+                additionalFieldType === "number"
+                  ? faker.string.numeric(4)
+                  : faker.lorem.words(2),
             },
           ],
         },

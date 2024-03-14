@@ -41,6 +41,7 @@ model AdditionalField {
   uuid       String   @id @default(uuid())
   type       FieldType
   value      String
+  label      String
   patientUuid String
   patient    Patient  @relation(fields: [patientUuid], references: [uuid], onDelete: Cascade)
 }
