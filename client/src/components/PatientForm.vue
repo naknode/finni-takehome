@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import type { Patient } from 'shared'
 import { format, formatISO } from 'date-fns'
 import { toast } from 'vue3-toastify'
@@ -107,6 +107,8 @@ import PatientAddresses from './PatientAddresses.vue'
 const props = defineProps<{
   data: Patient
 }>()
+
+const emits = defineEmits(['refresh:patient'])
 
 const updateAddresses = (updatedAddresses: Patient['addresses']) => {
   if (patient.value) {
@@ -121,6 +123,14 @@ const formattedDateOfBirth = computed(() => {
 })
 
 const router = useRouter()
+
+watch(
+  () => props.data,
+  (newVal: Patient) => {
+    patient.value = newVal
+  },
+  { deep: true }
+)
 
 onMounted(async () => {
   patient.value = props.data
@@ -163,6 +173,8 @@ async function submitForm() {
     toast.success(
       `Patient ${responseData.firstName} ${responseData.lastName} successfully updated. `
     )
+
+    emits('refresh:patient')
   } catch (error) {
     console.error('Error submitting form... ', error)
   }

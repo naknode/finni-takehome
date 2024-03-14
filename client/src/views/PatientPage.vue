@@ -19,7 +19,7 @@
       Go back
     </button>
 
-    <PatientForm :data="patientData" />
+    <PatientForm :data="patientData" @refresh:patient="refreshPatient" />
   </div>
 </template>
 
@@ -45,6 +45,11 @@ onMounted(async () => {
 
 function getAge(dateOfBirth) {
   return differenceInYears(new Date(), new Date(dateOfBirth))
+}
+
+const refreshPatient = async () => {
+  const data = await store.fetchPatient(uuid.value)
+  patientData.value = data
 }
 
 function getStatusClass(status) {
