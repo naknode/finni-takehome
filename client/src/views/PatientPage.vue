@@ -38,18 +38,13 @@ const route = useRoute()
 const router = useRouter()
 const uuid = ref(route.params.uuid || null)
 
-onMounted(async () => {
+async function getLatestPatient() {
   const data = await store.fetchPatient(uuid.value)
   patientData.value = data
-})
+}
 
 function getAge(dateOfBirth) {
   return differenceInYears(new Date(), new Date(dateOfBirth))
-}
-
-const refreshPatient = async () => {
-  const data = await store.fetchPatient(uuid.value)
-  patientData.value = data
 }
 
 function getStatusClass(status) {
@@ -65,6 +60,10 @@ function getStatusClass(status) {
       return 'bg-blue-100 text-blue-800 text-xl font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'
   }
 }
+
+onMounted(async () => getLatestPatient())
+
+const refreshPatient = async () => getLatestPatient()
 
 const goBack = () => {
   router.push('/dashboard')
