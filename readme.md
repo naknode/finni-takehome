@@ -33,9 +33,9 @@ We utilize pnpm workspaces to better unify the CI/CD procedures for the front an
 
 - Run `pnpm install` to install all workspace package modules.
 
-- Then run `pnpm prisma:start` to have your database in sync with the Prisma schema.
+- Copy the `.env.template` env file from both `client/` and `server/` to their respective `.env` files and modify accordingly.
 
-- Copy the `.env.template` env file from both `client/` and `server/` to their respective `.env` files and modify accordingly. 
+- Then run `pnpm prisma:start` to have your database in sync with the Prisma schema.
 
 - Finally, run `pnpm dev` and you're good to go.
 
