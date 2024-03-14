@@ -20,9 +20,10 @@ Before we start, this project uses pnpm instead of npm.
 
 We utilize pnpm workspaces to better unify the CI/CD procedures for the front and backend.
 
-- `pnpm run build`: To run the builds of the TypeScript API server and Vue 3 front-end
-- `pnpm run dev`: To concurrently run the backend and front-end
-- `pnpm run start`: To run the servers from their production-built mode
+- `pnpm build`: To run the builds of the TypeScript API server and Vue 3 front-end
+- `pnpm dev`: To concurrently run the backend and front-end
+- `pnpm start`: To run the servers from their production-built mode
+- `pnpm prisma:start`: Generate the database from the Prisma schema and get it in sync
 
 #### Getting Started
 
@@ -32,11 +33,11 @@ We utilize pnpm workspaces to better unify the CI/CD procedures for the front an
 
 - In root folder: run `pnpm install`.
 
+- Then run `pnpm prisma:start` to have your database in sync with the Prisma schema
+
 - Go to `/server` folder, and create the `.env` file from the `.env.template` file with your PostgreSQL credentials.
 
-- Then run `pnpm prisma:start`, to generate the Prisma schema files and the database tables.
-
-- Copy the `client/.env.template` environment file to `client/.env` (Port 3000 might be taken?)
+- Copy the `client/.env.template` env file to `client/.env` (Port 3000 might be taken?)
 
 - Back in the root folder, run `pnpm dev` and you're good to go.
 

@@ -17,7 +17,8 @@
     "postinstall": "pnpm --stream -r run clean",
     "dev": "pnpm --stream -r run dev",
     "build": "pnpm --stream -r build",
-    "start": "pnpm --stream -r start"
+    "start": "pnpm --stream -r start",
+    "prisma:start": "pnpm --filter ./server run prisma:start"
   },
   "author": "Dan Jasnowski <djasnowski@gmail.com>",
   "license": "MIT"
