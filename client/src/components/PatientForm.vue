@@ -81,7 +81,7 @@
 
       <div class="flex justify-between pt-10">
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
-          Update Patient
+          {{ props.creating ? 'Create' : 'Update' }} Patient
         </button>
         <button
           @click="deletePatient"
@@ -106,6 +106,7 @@ import PatientAddresses from './PatientAddresses.vue'
 
 const props = defineProps<{
   data: Patient
+  creating: boolean
 }>()
 
 const emits = defineEmits(['refresh:patient'])
@@ -150,31 +151,58 @@ async function submitForm() {
     ...patientDataWithoutDOB,
     dateOfBirth: formatISO(new Date(dateOfBirth))
   }
+
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_BASE_URL}/patients/${patient.value?.uuid}`,
-      {
-        method: 'PATCH',
+    if (props.creating) {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/patient`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(patientDataForSubmission)
+      })
+
+      if (!response.ok) {
+        toast.error(
+          `Failed to update patient ${patient.value?.firstName} ${patient.value?.lastName}.`
+        )
+        throw new Error(`There was an error: ${response.status}`)
       }
-    )
 
-    if (!response.ok) {
-      toast.error(
-        `Failed to update patient ${patient.value?.firstName} ${patient.value?.lastName}.`
+      const responseData = await response.json()
+
+      setTimeout(() => {
+        toast.success(
+          `Patient ${responseData.firstName} ${responseData.lastName} successfully created. `
+        )
+      }, 100)
+      router.push(`/patient/${responseData.uuid}`)
+    } else {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/patients/${patient.value?.uuid}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(patientDataForSubmission)
+        }
       )
-      throw new Error(`There was an error: ${response.status}`)
+
+      if (!response.ok) {
+        toast.error(
+          `Failed to update patient ${patient.value?.firstName} ${patient.value?.lastName}.`
+        )
+        throw new Error(`There was an error: ${response.status}`)
+      }
+
+      const responseData = await response.json()
+      toast.success(
+        `Patient ${responseData.firstName} ${responseData.lastName} successfully updated. `
+      )
+
+      emits('refresh:patient')
     }
-
-    const responseData = await response.json()
-    toast.success(
-      `Patient ${responseData.firstName} ${responseData.lastName} successfully updated. `
-    )
-
-    emits('refresh:patient')
   } catch (error) {
     console.error('Error submitting form... ', error)
   }

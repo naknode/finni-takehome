@@ -13,7 +13,7 @@ onMounted(() => {
 
 const router = useRouter()
 
-const createPatient = () => router.push('/create-patient')
+const createPatient = () => router.push('/patient/create')
 </script>
 
 <template>

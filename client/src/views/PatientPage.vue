@@ -19,7 +19,7 @@
       Go back
     </button>
 
-    <PatientForm :data="patientData" @refresh:patient="refreshPatient" />
+    <PatientForm :data="patientData" @refresh:patient="refreshPatient" :creating="false" />
   </div>
 </template>
 

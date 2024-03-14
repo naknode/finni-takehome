@@ -18,6 +18,7 @@ fastifyServer.get("/patients", async (req, res) => {
 type PatientWithUuidOnly = Pick<Patient, "uuid">;
 type AddressWithUuidOnly = Pick<Address, "uuid">;
 
+// Update Patient (create/update addresses)
 fastifyServer.patch(
   "/patients/:uuid",
   async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
@@ -65,6 +66,7 @@ fastifyServer.patch(
   }
 );
 
+// Get Patient details
 fastifyServer.get(
   "/patient/:uuid",
   async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
@@ -93,6 +95,32 @@ fastifyServer.get(
   }
 );
 
+// Create patient
+fastifyServer.post(
+  "/patient",
+  async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
+    const { addresses, additionalFields, ...patientData } = req.body as Patient;
+
+    try {
+      const createdPatient = await prisma.patient.create({
+        data: {
+          ...patientData,
+          addresses: {
+            create: [...addresses],
+          },
+        },
+      });
+
+      res.send(createdPatient);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ error: `Patient create failed: ${error.message}` });
+    }
+  }
+);
+
+// Delete patient
 fastifyServer.delete(
   "/patients/:uuid",
   async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
@@ -112,6 +140,7 @@ fastifyServer.delete(
   }
 );
 
+// Delete Address
 fastifyServer.delete(
   "/patients/address/:uuid",
   async (req: FastifyRequest<{ Params: AddressWithUuidOnly }>, res) => {

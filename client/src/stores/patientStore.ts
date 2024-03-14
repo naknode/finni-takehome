@@ -1,5 +1,6 @@
+import { faker } from '@faker-js/faker'
 import { defineStore } from 'pinia'
-import type { Patient } from 'shared'
+import { Status, type Patient } from 'shared'
 import { ref, computed } from 'vue'
 
 export const usePatientStore = defineStore('patients', () => {
@@ -16,6 +17,17 @@ export const usePatientStore = defineStore('patients', () => {
       return patients.value.find((p) => p.uuid === uuid)
     } else {
       return await fetchPatient(uuid)
+    }
+  }
+
+  function createNewPatient() {
+    return {
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      dateOfBirth: faker.date.birthdate(),
+      status: Status.Inquiry,
+      addresses: [],
+      additionalFields: []
     }
   }
 
@@ -46,5 +58,13 @@ export const usePatientStore = defineStore('patients', () => {
     }
   }
 
-  return { getAllPatients, updateState, patients, fetchPatients, getPatient, fetchPatient }
+  return {
+    getAllPatients,
+    updateState,
+    patients,
+    fetchPatients,
+    getPatient,
+    fetchPatient,
+    createNewPatient
+  }
 })

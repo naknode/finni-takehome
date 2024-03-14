@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PatientPage from '../views/PatientPage.vue'
+import PatientCreate from '../views/PatientCreate.vue'
 import DashboardView from '../views/DashboardView.vue'
-import DefaultLayout from '../layouts/DefaultLayout.vue'
-import EmptyLayout from '../layouts/EmptyLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +23,13 @@ const router = createRouter({
       path: '/patient/:uuid',
       name: 'patient',
       component: PatientPage,
+      props: true,
+      meta: { layout: 'DefaultLayout' }
+    },
+    {
+      path: '/patient/create',
+      name: 'patient-create',
+      component: PatientCreate,
       props: true,
       meta: { layout: 'DefaultLayout' }
     }
