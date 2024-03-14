@@ -7,18 +7,28 @@
       :pagination="true"
       :paginationPageSize="10"
       :paginationPageSizeSelector="[10, 25, 50, 100]"
-      :rowData="props.data"
+      :rowData="filteredData"
       class="ag-theme-alpine"
       style="height: 520px"
       :defaultColDef="defaultColDef"
       :animateRows="true"
     ></ag-grid-vue>
+    <div class="flex space-x-4 mt-7">
+      <div class="w-1/4">
+        <input
+          type="text"
+          placeholder="Search patients by city..."
+          v-model="query"
+          class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { format, differenceInYears } from 'date-fns'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { AgGridVue } from 'ag-grid-vue3'
 import 'ag-grid-community/styles/ag-grid.css'
 import type { RowClickedEvent, ValueFormatterParams, ValueGetterParams } from 'ag-grid-community'
@@ -27,6 +37,8 @@ import 'ag-grid-community/styles/ag-theme-alpine.css'
 import statusCellRenderer from './renderer/statusCellRenderer'
 import type { Patient } from 'shared'
 import router from '../router'
+
+const query = ref()
 
 const defaultColDef = ref({
   filter: 'agTextColumnFilter',
@@ -38,6 +50,18 @@ const gridOptions = {
     cursor: 'pointer'
   })
 }
+
+const filteredData = computed(() => {
+  if (!query.value) {
+    return props.data
+  }
+
+  return props.data.filter((patient) => {
+    return patient.addresses.some((address) =>
+      address.city.toLowerCase().includes(query.value.toLowerCase())
+    )
+  })
+})
 
 interface Props {
   data: Patient[]

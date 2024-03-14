@@ -6,6 +6,7 @@
       :key="index"
       style="border-bottom: 1px solid #cccccc"
       class="my-4 pb-5"
+      :class="{ 'bg-yellow-50': !address.uuid }"
     >
       <div class="flex space-x-4 mb-4">
         <div class="w-1/2">
@@ -323,10 +324,10 @@
       </div>
       <div class="flex justify-end">
         <button
-          @click="removeAddress(index)"
+          @click="removeAddress(index, $event)"
           class="mt-3 text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 float-right"
         >
-          Remove
+          {{ address?.uuid ? 'Delete' : 'Remove' }}
         </button>
       </div>
     </div>
@@ -344,6 +345,7 @@ import { faker } from '@faker-js/faker'
 import { ref, watch } from 'vue'
 import type { Address } from 'shared'
 import { useRoute } from 'vue-router'
+import { toast } from 'vue3-toastify'
 
 const emits = defineEmits(['update:addresses'])
 const route = useRoute()
@@ -357,7 +359,7 @@ const props = defineProps({
 
 const patientUuid = (route.params.uuid as string) || undefined
 
-const newAddress = () => ({
+const newAddress = (): Address => ({
   streetAddress: faker.location.streetAddress(),
   patientUuid,
   city: faker.location.city(),
@@ -366,12 +368,12 @@ const newAddress = () => ({
   zip: faker.location.zipCode()
 })
 
-const addresses = ref(props.existingAddresses.length ? props.existingAddresses : [newAddress()])
+const addresses = ref(props.existingAddresses.length ? props.existingAddresses : [])
 
 watch(
   () => props.existingAddresses,
   (newVal: Address[]) => {
-    addresses.value = newVal.length ? newVal : [newAddress()]
+    addresses.value = newVal.length ? newVal : []
   },
   { deep: true }
 )
@@ -382,7 +384,23 @@ const addAddress = (event: Event) => {
   emits('update:addresses', addresses.value)
 }
 
-const removeAddress = (index: number) => {
+const removeAddress = async (index: number, event: Event) => {
+  event.preventDefault()
+
+  const address = addresses.value[index]
+  if (address?.uuid) {
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/patients/address/${address?.uuid}`,
+      {
+        method: 'DELETE'
+      }
+    )
+    if (response.ok) {
+      toast.success(`Address successfully deleted. `)
+    }
+  }
+
+  console.log('Removing', index)
   addresses.value.splice(index, 1)
   emits('update:addresses', addresses.value)
 }

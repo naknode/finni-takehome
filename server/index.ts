@@ -1,6 +1,6 @@
 import fastify, { FastifyRequest } from "fastify";
 import { PrismaClient } from "@prisma/client";
-import { Patient } from "shared/types";
+import type { Patient, Address } from "shared/types";
 
 const prisma = new PrismaClient();
 
@@ -16,22 +16,43 @@ fastifyServer.get("/patients", async (req, res) => {
 });
 
 type PatientWithUuidOnly = Pick<Patient, "uuid">;
+type AddressWithUuidOnly = Pick<Address, "uuid">;
 
 fastifyServer.patch(
   "/patients/:uuid",
   async (req: FastifyRequest<{ Params: PatientWithUuidOnly }>, res) => {
     const { uuid } = req.params;
-    const updateData = req.body as Patient;
+    const { addresses, ...updateData } = req.body as Patient;
 
     try {
       const updatedPatient = await prisma.patient.update({
-        where: {
-          uuid,
-        },
+        where: { uuid },
         data: updateData,
       });
 
-      res.send(updatedPatient);
+      if (addresses && addresses.length > 0) {
+        const addressPromises = addresses.map(async (address) => {
+          if (address.uuid) {
+            return prisma.address.update({
+              where: { uuid: address.uuid },
+              data: { ...address, patientUuid: uuid },
+            });
+          } else {
+            return prisma.address.create({
+              data: { ...address, patientUuid: uuid },
+            });
+          }
+        });
+
+        await Promise.all(addressPromises);
+      }
+
+      const patientWithUpdatedAddresses = await prisma.patient.findUnique({
+        where: { uuid: updatedPatient.uuid },
+        include: { addresses: true },
+      });
+
+      res.send(patientWithUpdatedAddresses);
     } catch (error) {
       res
         .status(500)
@@ -70,7 +91,7 @@ fastifyServer.delete(
     const { uuid } = req.params;
 
     try {
-      const deletedPatient = await prisma.patient.delete({
+      await prisma.patient.delete({
         where: { uuid },
       });
 
@@ -79,6 +100,25 @@ fastifyServer.delete(
       res
         .status(500)
         .send({ error: `Failed to delete patient: ${error.message}` });
+    }
+  }
+);
+
+fastifyServer.delete(
+  "/patients/address/:uuid",
+  async (req: FastifyRequest<{ Params: AddressWithUuidOnly }>, res) => {
+    const { uuid } = req.params;
+
+    try {
+      await prisma.address.delete({
+        where: { uuid },
+      });
+
+      res.send({ message: "Patient address successfully deleted" });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ error: `Failed to delete patient address: ${error.message}` });
     }
   }
 );
