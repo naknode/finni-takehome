@@ -13,11 +13,14 @@
     >
       <div class="flex space-x-4 mb-4 items-end" v-if="address.toDelete">
         <div class="flex-grow">
-          <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          <label
+            for="address_deleted"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Address</label
           >
           <input
             type="text"
+            name="address_deleted"
             disabled
             v-model="address.streetAddress"
             class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -51,7 +54,9 @@
             >Address</label
           >
           <input
+            id="address"
             type="text"
+            autocomplete="off"
             :disabled="address.toDelete"
             v-model="address.streetAddress"
             class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -63,6 +68,7 @@
           >
           <input
             type="text"
+            id="city"
             :disabled="address.toDelete"
             v-model="address.city"
             class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -75,6 +81,8 @@
             >Country</label
           >
           <select
+            id="country"
+            autocomplete="off"
             v-model="address.country"
             :disabled="address.toDelete"
             class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -347,6 +355,7 @@
           >
           <input
             type="text"
+            id="state"
             :disabled="address.toDelete"
             v-model="address.state"
             class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -357,6 +366,7 @@
             >Zipcode</label
           >
           <input
+            id="zipcode"
             type="text"
             v-model="address.zip"
             :disabled="address.toDelete"
