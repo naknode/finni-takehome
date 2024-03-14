@@ -25,7 +25,7 @@ import type { RowClickedEvent, ValueFormatterParams, ValueGetterParams } from 'a
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
 import statusCellRenderer from './renderer/statusCellRenderer'
-import type { Patient } from 'shared'
+import type { Address, Patient } from 'shared'
 import router from '../router'
 
 const defaultColDef = ref({
@@ -50,33 +50,33 @@ const columnDefs = [
   { headerName: 'Middle Name', field: 'middleName', filter: true },
   { headerName: 'Last Name', field: 'lastName', flex: 1, filter: true },
   {
+    headerName: 'Age',
+    width: 100,
+    field: 'dateOfBirth',
+    valueGetter: (params: ValueGetterParams) =>
+      differenceInYears(new Date(), new Date(params.data.dateOfBirth)),
+    filter: true
+  },
+  {
+    headerName: 'Status',
+    field: 'status',
+    filter: true,
+    cellRenderer: statusCellRenderer,
+    width: 125
+  },
+  {
     headerName: 'City',
     field: 'addresses',
     valueGetter: (params: ValueGetterParams) => {
       if (params.data.addresses && params.data.addresses.length > 0) {
-        return params.data.addresses[0].city
+        return params.data.addresses.map((address: Address) => address.city).join(', ')
       } else {
         return '--'
       }
     },
     flex: 1,
     filter: true
-  },
-  {
-    headerName: 'Date of Birth',
-    field: 'dateOfBirth',
-    valueFormatter: (params: ValueFormatterParams) => format(new Date(params.value), 'MM/dd/yyyy'),
-    flex: 1
-  },
-  {
-    headerName: 'Age',
-    field: 'dateOfBirth',
-    valueGetter: (params: ValueGetterParams) =>
-      differenceInYears(new Date(), new Date(params.data.dateOfBirth)),
-    flex: 1,
-    filter: true
-  },
-  { headerName: 'Status', field: 'status', filter: true, cellRenderer: statusCellRenderer }
+  }
 ]
 
 const onRowClicked = (event: RowClickedEvent) => {
