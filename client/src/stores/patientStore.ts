@@ -11,12 +11,11 @@ export const usePatientStore = defineStore('patients', () => {
     patients.value = state
   }
 
-  async function getPatient(uuid: string) {
+  async function getPatient(uuid: string): Promise<Patient | undefined> {
     if (patients.value.length) {
       return patients.value.find((p) => p.uuid === uuid)
     } else {
-      const data = await fetchPatient(uuid)
-      return data
+      return await fetchPatient(uuid)
     }
   }
 
@@ -34,7 +33,7 @@ export const usePatientStore = defineStore('patients', () => {
     }
   }
 
-  async function fetchPatient(uuid: string) {
+  async function fetchPatient(uuid: string): Promise<Patient | undefined> {
     try {
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/patient/${uuid}`)
       if (response.ok) {

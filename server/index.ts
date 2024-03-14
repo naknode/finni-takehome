@@ -31,7 +31,7 @@ fastifyServer.patch(
       });
 
       if (addresses && addresses.length > 0) {
-        const addressPromises = addresses.map(async (address) => {
+        const addressPromises = addresses.map(async (address: Address) => {
           if (address.uuid) {
             return prisma.address.update({
               where: { uuid: address.uuid },
