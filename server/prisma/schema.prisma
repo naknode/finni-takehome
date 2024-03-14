@@ -26,6 +26,7 @@ model Patient {
 
 model Address {
   uuid          String   @id @default(uuid())
+  createdAt     DateTime  @default(now())
   streetAddress String
   city          String
   country       String

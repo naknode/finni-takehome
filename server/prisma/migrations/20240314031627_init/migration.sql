@@ -19,10 +19,12 @@ CREATE TABLE "Patient" (
 -- CreateTable
 CREATE TABLE "Address" (
     "uuid" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "streetAddress" TEXT NOT NULL,
-    "zip" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "country" TEXT NOT NULL,
+    "state" TEXT NOT NULL,
+    "zip" TEXT NOT NULL,
     "patientUuid" TEXT NOT NULL,
 
     CONSTRAINT "Address_pkey" PRIMARY KEY ("uuid")

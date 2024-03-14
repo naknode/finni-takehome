@@ -23,6 +23,7 @@ export type Patient = {
 
 export type Address = {
   uuid?: string;
+  toDelete?: boolean;
   streetAddress: string;
   state: string;
   zip: string;

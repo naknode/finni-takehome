@@ -32,7 +32,11 @@ fastifyServer.patch(
 
       if (addresses && addresses.length > 0) {
         const addressPromises = addresses.map(async (address: Address) => {
-          if (address.uuid) {
+          if (address.toDelete && address.uuid) {
+            return prisma.address.delete({
+              where: { uuid: address.uuid },
+            });
+          } else if (address.uuid) {
             return prisma.address.update({
               where: { uuid: address.uuid },
               data: { ...address, patientUuid: uuid },
@@ -72,7 +76,11 @@ fastifyServer.get(
           uuid,
         },
         include: {
-          addresses: true,
+          addresses: {
+            orderBy: {
+              createdAt: "asc",
+            },
+          },
         },
       });
 
