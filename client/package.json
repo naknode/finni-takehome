@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.3.3",
+    "@faker-js/faker": "^8.4.1",
     "ag-grid-community": "^31.1.1",
     "ag-grid-vue3": "^31.1.1",
     "date-fns": "^3.3.1",

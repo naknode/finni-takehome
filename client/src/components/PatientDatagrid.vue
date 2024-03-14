@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { format, differenceInYears } from 'date-fns'
-import { ref, defineProps } from 'vue'
+import { ref } from 'vue'
 import { AgGridVue } from 'ag-grid-vue3'
 import 'ag-grid-community/styles/ag-grid.css'
 import type { RowClickedEvent, ValueFormatterParams, ValueGetterParams } from 'ag-grid-community'

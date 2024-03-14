@@ -13,6 +13,9 @@ importers:
       '@auth0/auth0-vue':
         specifier: ^2.3.3
         version: 2.3.3(typescript@5.4.2)(vue-router@4.3.0)
+      '@faker-js/faker':
+        specifier: ^8.4.1
+        version: 8.4.1
       ag-grid-community:
         specifier: ^31.1.1
         version: 31.1.1

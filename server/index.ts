@@ -50,6 +50,9 @@ fastifyServer.get(
         where: {
           uuid,
         },
+        include: {
+          addresses: true,
+        },
       });
 
       res.send(getPatient);

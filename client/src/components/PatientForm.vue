@@ -74,6 +74,11 @@
         </div>
       </div>
 
+      <PatientAddresses
+        :existingAddresses="patient.addresses"
+        @update:addresses="updateAddresses"
+      />
+
       <div class="flex justify-between pt-10">
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
           Update Patient
@@ -97,9 +102,17 @@ import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import { useRouter } from 'vue-router'
 
+import PatientAddresses from './PatientAddresses.vue'
+
 const props = defineProps<{
   data: Patient
 }>()
+
+const updateAddresses = (updatedAddresses: Patient['addresses']) => {
+  if (patient.value) {
+    patient.value.addresses = updatedAddresses
+  }
+}
 
 const patient = ref<Patient | null>(null)
 
@@ -128,13 +141,16 @@ async function submitForm() {
     dateOfBirth: formatISO(new Date(dateOfBirth))
   }
   try {
-    const response = await fetch(`http://localhost:3000/patients/${patient.value?.uuid}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(patientDataForSubmission)
-    })
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/patients/${patient.value?.uuid}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(patientDataForSubmission)
+      }
+    )
 
     if (!response.ok) {
       toast.error(
@@ -156,9 +172,12 @@ async function deletePatient(event: Event) {
   try {
     event.preventDefault()
 
-    const response = await fetch(`http://localhost:3000/patients/${patient.value?.uuid}`, {
-      method: 'DELETE'
-    })
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/patients/${patient.value?.uuid}`,
+      {
+        method: 'DELETE'
+      }
+    )
     if (response.ok) {
       router.push('/dashboard')
       setTimeout(() => {

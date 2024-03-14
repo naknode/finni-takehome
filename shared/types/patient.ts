@@ -11,7 +11,7 @@ export enum FieldType {
 }
 
 export type Patient = {
-  uuid: string;
+  uuid?: string;
   firstName: string;
   middleName?: string;
   lastName: string;
@@ -22,20 +22,18 @@ export type Patient = {
 };
 
 export type Address = {
-  uuid: string;
+  uuid?: string;
   streetAddress: string;
   state: string;
   zip: string;
   city: string;
   country: string;
-  patientUuid: string;
-  patient: Patient;
+  patientUuid?: string;
 };
 
 export type AdditionalField = {
-  uuid: string;
+  uuid?: string;
   type: FieldType;
   value: string;
-  patientUuid: string;
-  patient: Patient;
+  patientUuid?: string;
 };
