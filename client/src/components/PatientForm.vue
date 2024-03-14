@@ -80,13 +80,19 @@
       />
 
       <div class="flex justify-between pt-10">
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 flex items-center flex-row"
+        >
+          <PlusIcon v-if="props.creating" class="h-6 w-6 text-white mr-3" />
           {{ props.creating ? 'Create' : 'Update' }} Patient
         </button>
         <button
+          v-if="!props.creating"
           @click="deletePatient"
-          class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700"
+          class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 flex items-center flex-row"
         >
+          <TrashIcon class="h-6 w-6 text-white mr-3" />
           Delete
         </button>
       </div>
@@ -95,6 +101,7 @@
 </template>
 
 <script setup lang="ts">
+import { TrashIcon, PlusIcon } from '@heroicons/vue/24/outline'
 import { computed, onMounted, ref, watch } from 'vue'
 import type { Patient } from 'shared'
 import { format, formatISO } from 'date-fns'
