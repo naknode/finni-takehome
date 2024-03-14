@@ -16,7 +16,7 @@
           />
         </div>
 
-        <div class="size-full">
+        <div class="size-full pr-10">
           <label
             for="middleName"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -29,18 +29,18 @@
             class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
-      </div>
 
-      <div class="mb-6">
-        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Last Name</label
-        >
-        <input
-          type="text"
-          id="lastName"
-          v-model="patient.lastName"
-          class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
+        <div class="size-full">
+          <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Last Name</label
+          >
+          <input
+            type="text"
+            id="lastName"
+            v-model="patient.lastName"
+            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
       </div>
 
       <div class="flex flex-row justify-between items-center mb-6">
