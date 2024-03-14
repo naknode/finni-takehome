@@ -7,6 +7,7 @@ CREATE TYPE "FieldType" AS ENUM ('number', 'string');
 -- CreateTable
 CREATE TABLE "Patient" (
     "uuid" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "firstName" TEXT NOT NULL,
     "middleName" TEXT,
     "lastName" TEXT NOT NULL,

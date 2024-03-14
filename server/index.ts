@@ -8,9 +8,13 @@ const fastifyServer = fastify();
 
 void fastifyServer.register(require("@fastify/cors"));
 
+// Get all patients
 fastifyServer.get("/patients", async (req, res) => {
   const patients = await prisma.patient.findMany({
     include: { additionalFields: true, addresses: true },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
   res.send(patients);
 });

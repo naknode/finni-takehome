@@ -15,6 +15,7 @@ datasource db {
 
 model Patient {
   uuid             String            @id @default(uuid())
+  createdAt     DateTime  @default(now())
   firstName        String
   middleName       String?
   lastName         String
