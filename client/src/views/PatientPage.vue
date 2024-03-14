@@ -2,15 +2,11 @@
   <div class="relative max-w-[85rem] w-full mx-auto px-8 flex-col" v-if="patientData">
     <div class="flex flex-row justify-between items-center">
       <h1 class="text-4xl my-8 flex items-center">
-        {{ patientData?.firstName }} {{ patientData?.lastName }} ({{
-          getAge(patientData?.dateOfBirth)
-        }}
+        {{ firstName }} {{ lastName }} ({{ age }}
         yrs. old)
-        <span
-          :class="[getStatusClass(patientData?.status), 'ml-5']"
-          style="text-transform: uppercase"
-          >{{ patientData?.status }}</span
-        >
+        <span :class="[getStatusClass(status), 'ml-5']" style="text-transform: uppercase">{{
+          status
+        }}</span>
       </h1>
       <GoBackButton />
     </div>
@@ -19,9 +15,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-import { differenceInYears } from 'date-fns'
+import { differenceInYears, parseISO } from 'date-fns'
 
 import { usePatientStore } from '../stores/patientStore'
 import PatientForm from '@/components/PatientForm.vue'
@@ -33,13 +29,30 @@ const patientData = ref()
 const route = useRoute()
 const uuid = ref(route.params.uuid || null)
 
-async function getLatestPatient() {
+const displayedProps = reactive({
+  firstName: '',
+  lastName: '',
+  dateOfBirth: '',
+  status: ''
+})
+
+const firstName = computed(() => displayedProps.firstName)
+const lastName = computed(() => displayedProps.lastName)
+const status = computed(() => displayedProps.status)
+const age = computed(() => {
+  return displayedProps.dateOfBirth
+    ? differenceInYears(new Date(), parseISO(displayedProps.dateOfBirth))
+    : ''
+})
+
+async function fetchPatient() {
   const data = await store.fetchPatient(uuid.value)
   patientData.value = data
-}
 
-function getAge(dateOfBirth) {
-  return differenceInYears(new Date(), new Date(dateOfBirth))
+  displayedProps.firstName = data?.firstName
+  displayedProps.lastName = data?.lastName
+  displayedProps.dateOfBirth = data?.dateOfBirth
+  displayedProps.status = data?.status
 }
 
 function getStatusClass(status) {
@@ -56,7 +69,7 @@ function getStatusClass(status) {
   }
 }
 
-onMounted(async () => getLatestPatient())
+onMounted(fetchPatient)
 
-const refreshPatient = async () => getLatestPatient()
+const refreshPatient = async () => fetchPatient()
 </script>
