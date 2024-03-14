@@ -32,13 +32,11 @@ We utilize pnpm workspaces to better unify the CI/CD procedures for the front an
 
 - In root folder: run `pnpm install`.
 
-- Go to `/server` folder, and update the `.env` file from the `.env.template` file with your PostgreSQL credentials and table.
+- Go to `/server` folder, and create the `.env` file from the `.env.template` file with your PostgreSQL credentials.
 
-- Then run `./node_modules/.bin/prisma generate`, to generate the Prisma schema/files needed.
+- Then run `pnpm prisma:start`, to generate the Prisma schema files and the database tables.
 
-- Then run `pnpm exec prisma migrate dev --name init` to create the tables with the schemas on the database.
-
-- Update the `client/.env` environment file with the backend URL, if you have too. (Port 3000 might be taken.)
+- Copy the `client/.env.template` environment file to `client/.env` (Port 3000 might be taken?)
 
 - Back in the root folder, run `pnpm dev` and you're good to go.
 

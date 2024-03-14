@@ -10,6 +10,9 @@
     "dev": "NODE_ENV=development esno watch index.ts",
     "debug": "esno --inspect index.ts",
     "build": "esbuild ./index.ts --platform=node --bundle --outfile=server.bundled.js",
+    "prisma:start": "prisma:db && prisma:generate",
+    "prisma:db": "prisma migrate dev --name init",
+    "prisma:generate": "prisma generate",
     "prisma:seed": "esno prisma/seed.ts"
   },
   "author": "",
